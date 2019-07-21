@@ -23,29 +23,29 @@ return cljs.core.assoc.call(null,cljs.core.assoc.call(null,ship,new cljs.core.Ke
 closhooter.core.accel_ship_fn = (function closhooter$core$accel_ship_fn(key){
 if(cljs.core._EQ_.call(null,key,"ArrowRight")){
 return (function (ship){
-return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vx","vx",-1685168462),(function (p1__22358_SHARP_){
-return (p1__22358_SHARP_ + 0.1);
+return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vx","vx",-1685168462),(function (p1__22357_SHARP_){
+return (p1__22357_SHARP_ + 0.1);
 }));
 });
 } else {
 if(cljs.core._EQ_.call(null,key,"ArrowLeft")){
 return (function (ship){
-return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vx","vx",-1685168462),(function (p1__22359_SHARP_){
-return (p1__22359_SHARP_ - 0.1);
+return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vx","vx",-1685168462),(function (p1__22358_SHARP_){
+return (p1__22358_SHARP_ - 0.1);
 }));
 });
 } else {
 if(cljs.core._EQ_.call(null,key,"ArrowDown")){
 return (function (ship){
-return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vy","vy",-2018509997),(function (p1__22360_SHARP_){
-return (p1__22360_SHARP_ + 0.1);
+return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vy","vy",-2018509997),(function (p1__22359_SHARP_){
+return (p1__22359_SHARP_ + 0.1);
 }));
 });
 } else {
 if(cljs.core._EQ_.call(null,key,"ArrowUp")){
 return (function (ship){
-return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vy","vy",-2018509997),(function (p1__22361_SHARP_){
-return (p1__22361_SHARP_ - 0.1);
+return cljs.core.update.call(null,ship,new cljs.core.Keyword(null,"vy","vy",-2018509997),(function (p1__22360_SHARP_){
+return (p1__22360_SHARP_ - 0.1);
 }));
 });
 } else {
@@ -65,16 +65,16 @@ document.addEventListener("keydown",closhooter.core.user_input);
 
 return new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"ship","ship",197863473),new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"vx","vx",-1685168462),(0),new cljs.core.Keyword(null,"x","x",2099068185),(50),new cljs.core.Keyword(null,"vy","vy",-2018509997),(0),new cljs.core.Keyword(null,"y","y",-1757859776),(50)], null)], null);
 }));
-re_frame.core.reg_event_db.call(null,new cljs.core.Keyword(null,"run-physics","run-physics",-450804448),(function (db,p__22362){
-var vec__22363 = p__22362;
-var _ = cljs.core.nth.call(null,vec__22363,(0),null);
-var ___$1 = cljs.core.nth.call(null,vec__22363,(1),null);
+re_frame.core.reg_event_db.call(null,new cljs.core.Keyword(null,"run-physics","run-physics",-450804448),(function (db,p__22361){
+var vec__22362 = p__22361;
+var _ = cljs.core.nth.call(null,vec__22362,(0),null);
+var ___$1 = cljs.core.nth.call(null,vec__22362,(1),null);
 return cljs.core.update.call(null,db,new cljs.core.Keyword(null,"ship","ship",197863473),closhooter.core.update_ship_position);
 }));
-re_frame.core.reg_event_db.call(null,new cljs.core.Keyword(null,"update-ship-speed","update-ship-speed",615654420),(function (db,p__22366){
-var vec__22367 = p__22366;
-var _ = cljs.core.nth.call(null,vec__22367,(0),null);
-var key = cljs.core.nth.call(null,vec__22367,(1),null);
+re_frame.core.reg_event_db.call(null,new cljs.core.Keyword(null,"update-ship-speed","update-ship-speed",615654420),(function (db,p__22365){
+var vec__22366 = p__22365;
+var _ = cljs.core.nth.call(null,vec__22366,(0),null);
+var key = cljs.core.nth.call(null,vec__22366,(1),null);
 var ship = new cljs.core.Keyword(null,"ship","ship",197863473).cljs$core$IFn$_invoke$arity$1(db);
 var move_fn = closhooter.core.accel_ship_fn.call(null,key);
 return cljs.core.assoc.call(null,db,new cljs.core.Keyword(null,"ship","ship",197863473),move_fn.call(null,ship));
@@ -103,4 +103,4 @@ return reagent.core.render.call(null,new cljs.core.PersistentVector(null, 1, 5, 
 });
 goog.exportSymbol('closhooter.core.run', closhooter.core.run);
 
-//# sourceMappingURL=core.js.map?rel=1563735152083
+//# sourceMappingURL=core.js.map?rel=1563744771357
