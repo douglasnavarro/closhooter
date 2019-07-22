@@ -12,14 +12,14 @@
 
 (defn run-physics
   []
-  (rf/dispatch [:run-physics]))  ;; <-- dispatch used
+  (rf/dispatch [:run-physics]))
 
 (defonce game-clock (js/setInterval run-physics 16.7))
 
 
 ;; -- Domino 2 - Event Handlers -----------------------------------------------
 
-(defn- update-ship-position
+(defn- update-object-position
   [ship]
   (let [updated-x (+ (:vx ship) (:x ship))
         updated-y (+ (:vy ship) (:y ship))]
@@ -36,17 +36,26 @@
     (= key "ArrowUp")    (fn [ship] (update ship :vy #(- % 0.1)))
     :else                (fn [ship] (do (println "Unrecognized key!" key) ship))))
 
-(rf/reg-event-db              ;; sets up initial application state
-  :initialize                 ;; usage:  (dispatch [:initialize])
-  (fn [_ _]                   ;; the two parameters are not important here, so use _
+(defn- update-obstacles-position
+  [obstacles]
+  (map update-object-position obstacles))
+
+(rf/reg-event-db
+  :initialize
+  (fn [_ _]
     (do
      (js/document.addEventListener "keydown" user-input)
-     {:ship {:vx 0 :x 50 :vy 0 :y 50}})))
+     {:ship {:vx 0 :x 50 :vy 0 :y 50}
+      :obstacles [{:id (rand-int 100) :vx 0 :x 10 :vy 0.1 :y 20}
+                  {:id (rand-int 100) :vx 0 :x 30 :vy 0.2 :y 20}
+                  {:id (rand-int 100) :vx 0 :x 60 :vy 0.3 :y 20}]})))
 
 (rf/reg-event-db
   :run-physics
   (fn [db [_ _]]
-    (update db :ship update-ship-position)))
+    (-> db
+        (update :ship      update-object-position)
+        (update :obstacles update-obstacles-position))))
 
 (rf/reg-event-db
   :update-ship-speed
@@ -62,6 +71,11 @@
   (fn [db _]
     (:ship db)))
 
+(rf/reg-sub
+  :obstacles-state
+  (fn [db _]
+    (:obstacles db)))
+
 ;; -- Domino 5 - View Functions ----------------------------------------------
 
 
@@ -71,13 +85,25 @@
   (let [ship @(rf/subscribe [:ship-state])
         left (str (:x ship) "%")
         top  (str (:y ship) "%")]
-    (println ship)
     [:div.ship {:style {:left left :top top}} "SHIP"]))
+
+(defn render-obstacle
+  []
+  (fn [obstacle]
+    [:div.ship {:style {:left (str (:x obstacle) "%") :top (str (:y obstacle) "%")}} "OBS"]))
+
+(defn render-obstacles
+  []
+  (let [obstacles @(rf/subscribe [:obstacles-state])]
+    [:div.obstacles
+     (for [obstacle obstacles]
+       ^{:key (:id obstacle)} [render-obstacle obstacle])]))
 
 (defn ui
   []
   [:div.universe
-   [render-ship]])
+   [render-ship]
+   [render-obstacles]])
 
 ;; -- Entry Point -------------------------------------------------------------
 
